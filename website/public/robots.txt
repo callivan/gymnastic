@@ -1,0 +1,3 @@
+User-agent: *
+Dissalow:
+Sitemap: https://vverx-rf.ru/sitemap.xml

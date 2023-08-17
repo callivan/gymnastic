@@ -1,0 +1,1 @@
+export { useCardAnimation } from './card';
