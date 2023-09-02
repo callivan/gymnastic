@@ -3,12 +3,13 @@ import * as S from './Media.styles';
 import { Scroll } from '@ui';
 import { useLayoutEffect, useState } from 'react';
 import { getMedias } from '@utils';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useAnimationContext } from '@contexts';
 
 export default function PageMedia() {
   const navigate = useNavigate();
+  const pathname = useLocation();
 
   const { action } = useAnimationContext();
 
@@ -34,6 +35,11 @@ export default function PageMedia() {
     loadCoaches();
   }, [action]);
 
+  const siteName =
+    import.meta.env.VITE_STRAPI_URL && typeof import.meta.env.VITE_STRAPI_URL === 'string'
+      ? import.meta.env.VITE_STRAPI_URL.replace(/http(s)?:\/\//gi, '')
+      : '';
+
   return (
     <>
       <Helmet>
@@ -52,6 +58,8 @@ export default function PageMedia() {
           property="og:description"
           content="Фото и видео материалы учебно-тренировочного центра 'Вверх'"
         />
+        <meta property="og:url" content={import.meta.env.VITE_STRAPI_URL + pathname} />
+        <meta property="og:site_name" content={siteName} />
         <meta property="og:image" content="/logo-social.png" />
         <meta property="og:image:width" content="400" />
         <meta property="og:image:height" content="400" />
@@ -61,6 +69,8 @@ export default function PageMedia() {
           name="twitter:description"
           content="Фото и видео материалы учебно-тренировочного центра 'Вверх'"
         />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={import.meta.env.VITE_STRAPI_URL + pathname} />
         <meta name="twitter:image" content="/logo-social.png" />
       </Helmet>
       <Scroll>

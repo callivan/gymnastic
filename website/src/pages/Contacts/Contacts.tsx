@@ -6,13 +6,14 @@ import { useLayoutEffect, useState } from 'react';
 import { animated } from '@react-spring/web';
 import { IconMarker, IconPhone, Loader, Scroll } from '@ui';
 import { getContacts, GET_SOCIAL_ICON } from '@utils';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Empty } from '@components';
 import { Helmet } from 'react-helmet-async';
 import { IAddressAttributes, IPhoneAttributes, ISocialAttributes } from '@types';
 
 export default function PageContacts() {
   const navigate = useNavigate();
+  const pathname = useLocation();
 
   const [isEmpty, setEmpty] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(true);
@@ -76,6 +77,11 @@ export default function PageContacts() {
     loadContacts();
   }, [action]);
 
+  const siteName =
+    import.meta.env.VITE_STRAPI_URL && typeof import.meta.env.VITE_STRAPI_URL === 'string'
+      ? import.meta.env.VITE_STRAPI_URL.replace(/http(s)?:\/\//gi, '')
+      : '';
+
   return (
     <>
       <Helmet>
@@ -85,12 +91,16 @@ export default function PageContacts() {
 
         <meta property="og:title" content="Вверх | Контакты" />
         <meta property="og:description" content="Контакты учебно-тренировочного центра 'Вверх'" />
+        <meta property="og:url" content={import.meta.env.VITE_STRAPI_URL + pathname} />
+        <meta property="og:site_name" content={siteName} />
         <meta property="og:image" content="/logo-social.png" />
         <meta property="og:image:width" content="400" />
         <meta property="og:image:height" content="400" />
 
         <meta name="twitter:title" content="Вверх | Контакты" />
         <meta name="twitter:description" content="Контакты учебно-тренировочного центра 'Вверх'" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={import.meta.env.VITE_STRAPI_URL + pathname} />
         <meta name="twitter:image" content="/logo-social.png" />
       </Helmet>
       <Scroll>

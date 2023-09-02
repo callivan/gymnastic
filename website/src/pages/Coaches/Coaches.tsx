@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import { Card, Empty, TCardProps } from '@components';
 import * as S from './Coaches.styles';
 import { Scroll } from '@ui';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAnimationContext } from '@contexts';
 import { useCardAnimation } from './animations';
 import { getCoaches } from '@utils';
@@ -11,6 +11,7 @@ import { Helmet } from 'react-helmet-async';
 
 export default function PageCoaches() {
   const navigate = useNavigate();
+  const pathname = useLocation();
 
   const [isEmpty, setEmpty] = useState<boolean>(false);
   const [coaches, setCoaches] = useState<TCardProps[]>([]);
@@ -77,6 +78,11 @@ export default function PageCoaches() {
     loadCoaches();
   }, []);
 
+  const siteName =
+    import.meta.env.VITE_STRAPI_URL && typeof import.meta.env.VITE_STRAPI_URL === 'string'
+      ? import.meta.env.VITE_STRAPI_URL.replace(/http(s)?:\/\//gi, '')
+      : '';
+
   return (
     <>
       <Helmet>
@@ -89,6 +95,8 @@ export default function PageCoaches() {
           property="og:description"
           content="Тренерский состав учебно-тренировочного центра 'Вверх'"
         />
+        <meta property="og:url" content={import.meta.env.VITE_STRAPI_URL + pathname} />
+        <meta property="og:site_name" content={siteName} />
         <meta property="og:image" content="/logo-social.png" />
         <meta property="og:image:width" content="400" />
         <meta property="og:image:height" content="400" />
@@ -98,6 +106,8 @@ export default function PageCoaches() {
           name="twitter:description"
           content="Тренерский состав учебно-тренировочного центра 'Вверх'"
         />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={import.meta.env.VITE_STRAPI_URL + pathname} />
         <meta name="twitter:image" content="/logo-social.png" />
       </Helmet>
 

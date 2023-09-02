@@ -4,10 +4,11 @@ import { Scroll } from '@ui';
 import { getPrices } from '@utils';
 import { useLayoutEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function PagePrices() {
   const navigate = useNavigate();
+  const pathname = useLocation();
 
   const { action } = useAnimationContext();
   const [isEmpty, setEmpty] = useState<boolean>(false);
@@ -33,6 +34,11 @@ export default function PagePrices() {
     loadPrices();
   }, [action]);
 
+  const siteName =
+    import.meta.env.VITE_STRAPI_URL && typeof import.meta.env.VITE_STRAPI_URL === 'string'
+      ? import.meta.env.VITE_STRAPI_URL.replace(/http(s)?:\/\//gi, '')
+      : '';
+
   return (
     <>
       <Helmet>
@@ -48,6 +54,8 @@ export default function PagePrices() {
           property="og:description"
           content="Цены на различные услуги учебно-тренировочного центра 'Вверх'"
         />
+        <meta property="og:url" content={import.meta.env.VITE_STRAPI_URL + pathname} />
+        <meta property="og:site_name" content={siteName} />
         <meta property="og:image" content="/logo-social.png" />
         <meta property="og:image:width" content="400" />
         <meta property="og:image:height" content="400" />
@@ -57,6 +65,8 @@ export default function PagePrices() {
           name="twitter:description"
           content="Цены на различные услуги учебно-тренировочного центра 'Вверх'"
         />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={import.meta.env.VITE_STRAPI_URL + pathname} />
         <meta name="twitter:image" content="/logo-social.png" />
       </Helmet>
       <Scroll>
