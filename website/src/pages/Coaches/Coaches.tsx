@@ -61,8 +61,6 @@ export default function PageCoaches() {
   }, [action]);
 
   useLayoutEffect(() => {
-    if (action !== 'page_start') return;
-
     const loadCoaches = async () => {
       const data = await getCoaches((message) => {
         navigate('/error', { state: message, replace: true });
@@ -77,7 +75,7 @@ export default function PageCoaches() {
     };
 
     loadCoaches();
-  }, [action]);
+  }, []);
 
   return (
     <>
@@ -91,22 +89,34 @@ export default function PageCoaches() {
           property="og:description"
           content="Тренерский состав учебно-тренировочного центра 'Вверх'"
         />
+        <meta property="og:image" content="/logo-social.png" />
+        <meta property="og:image:width" content="400" />
+        <meta property="og:image:height" content="400" />
+
+        <meta name="twitter:title" content="Вверх | Тренеры" />
+        <meta
+          name="twitter:description"
+          content="Тренерский состав учебно-тренировочного центра 'Вверх'"
+        />
+        <meta name="twitter:image" content="/logo-social.png" />
       </Helmet>
+
       <Scroll>
         <S.Wrapper ref={wrapperRef}>
           <S.Container className="container">
-            {stylesCard.map((styleProps, index) => (
-              <animated.div key={coaches[index].id} style={styleProps}>
-                <Card
-                  id={coaches[index].id}
-                  imgUrl={coaches[index].imgUrl}
-                  imgPreviewUrl={coaches[index].imgPreviewUrl}
-                  firstname={coaches[index].firstname}
-                  lastname={coaches[index].lastname}
-                  coach_infos={coaches[index].coach_infos}
-                />
-              </animated.div>
-            ))}
+            {coaches.length &&
+              stylesCard.map((styleProps, index) => (
+                <animated.div key={coaches[index].id} style={styleProps}>
+                  <Card
+                    id={coaches[index].id}
+                    imgUrl={coaches[index].imgUrl}
+                    imgPreviewUrl={coaches[index].imgPreviewUrl}
+                    firstname={coaches[index].firstname}
+                    lastname={coaches[index].lastname}
+                    coach_infos={coaches[index].coach_infos}
+                  />
+                </animated.div>
+              ))}
           </S.Container>
         </S.Wrapper>
       </Scroll>

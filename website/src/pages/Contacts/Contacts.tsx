@@ -5,20 +5,20 @@ import { useInfoAnimation, useMapAnimation } from './animations';
 import { useLayoutEffect, useState } from 'react';
 import { animated } from '@react-spring/web';
 import { IconMarker, IconPhone, Loader, Scroll } from '@ui';
-import { getAddresses, getPhons, getSocial, GET_SOCIAL_ICON } from '@utils';
-import { IAddressProps, IPhonsProps, ISocialProps } from './types/component';
+import { getContacts, GET_SOCIAL_ICON } from '@utils';
 import { useNavigate } from 'react-router-dom';
 import { Empty } from '@components';
 import { Helmet } from 'react-helmet-async';
+import { IAddressAttributes, IPhoneAttributes, ISocialAttributes } from '@types';
 
 export default function PageContacts() {
   const navigate = useNavigate();
 
   const [isEmpty, setEmpty] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(true);
-  const [addresses, setAddresses] = useState<IAddressProps[]>([]);
-  const [phons, setPhons] = useState<IPhonsProps[]>([]);
-  const [socials, setSocials] = useState<ISocialProps[]>([]);
+  const [addresses, setAddresses] = useState<IAddressAttributes[]>([]);
+  const [phons, setPhons] = useState<IPhoneAttributes[]>([]);
+  const [socials, setSocials] = useState<ISocialAttributes[]>([]);
   const [coords, setCoords] = useState<[number, number]>([0, 0]);
 
   const { action } = useAnimationContext();
@@ -46,31 +46,30 @@ export default function PageContacts() {
     if (action !== 'page_start') return;
 
     const loadContacts = async () => {
-      const dataAddresses = await getAddresses((message) =>
-        navigate('/error', { state: message, replace: true }),
-      );
-      const dataPhons = await getPhons((message) =>
-        navigate('/error', { state: message, replace: true }),
-      );
-      const dataSocial = await getSocial((message) =>
+      const data = await getContacts((message) =>
         navigate('/error', { state: message, replace: true }),
       );
 
-      setAddresses(dataAddresses ?? []);
-      setPhons(dataPhons ?? []);
+      if (!data) return;
+
+      setAddresses(data.attributes.addresses ?? []);
+      setPhons(data.attributes.phones ?? []);
+      setSocials(data.attributes.socials ?? []);
+
       setCoords(
-        dataAddresses.length ? [dataAddresses[0].latitude, dataAddresses[0].longitude] : [0, 0],
+        data.attributes.addresses.length
+          ? [data.attributes.addresses[0].latitude, data.attributes.addresses[0].longitude]
+          : [0, 0],
       );
-      setSocials(dataSocial ?? []);
 
       if (
-        (!dataAddresses || !dataAddresses.length) &&
-        (!dataPhons || !dataPhons.length) &&
-        (!dataSocial || !dataSocial.length)
+        data.attributes.addresses.length ||
+        data.attributes.phones.length ||
+        data.attributes.socials.length
       ) {
-        setEmpty(true);
-      } else {
         setEmpty(false);
+      } else {
+        setEmpty(true);
       }
     };
 
@@ -86,6 +85,13 @@ export default function PageContacts() {
 
         <meta property="og:title" content="Вверх | Контакты" />
         <meta property="og:description" content="Контакты учебно-тренировочного центра 'Вверх'" />
+        <meta property="og:image" content="/logo-social.png" />
+        <meta property="og:image:width" content="400" />
+        <meta property="og:image:height" content="400" />
+
+        <meta name="twitter:title" content="Вверх | Контакты" />
+        <meta name="twitter:description" content="Контакты учебно-тренировочного центра 'Вверх'" />
+        <meta name="twitter:image" content="/logo-social.png" />
       </Helmet>
       <Scroll>
         <S.Wrapper style={{ justifyContent: !addresses.length ? 'center' : 'flex-end' }}>

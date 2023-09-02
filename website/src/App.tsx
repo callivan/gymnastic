@@ -1,16 +1,10 @@
-import { Suspense, lazy, useLayoutEffect } from 'react';
+import { Suspense, lazy, useLayoutEffect, useState } from 'react';
 import { Layout } from '@modules';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { useAnimationContext } from '@contexts';
 import { Img } from '@ui';
 
-import bgDesktop from './assets/bg/bg-1440.webp';
-import bgTablet from './assets/bg/bg-1024.webp';
-import bgTabletSmall from './assets/bg/bg-768.webp';
-import bgMobile from './assets/bg/bg-595.webp';
-import bgMobileSmall from './assets/bg/bg-390.webp';
-import bgPreview from './assets/bg/bg-preview.webp';
-import { useMatchMedia } from './utils/hooks';
+import { getHomePageImage } from './utils/request';
 
 const PagePrices = lazy(() => import('./pages/Prices/index'));
 const PageCoaches = lazy(() => import('./pages/Coaches/index'));
@@ -18,22 +12,20 @@ const PageMedia = lazy(() => import('./pages/Media/index'));
 const PageContacts = lazy(() => import('./pages/Contacts/index'));
 const PageError = lazy(() => import('./pages/Error/index'));
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export function App() {
+  const [homePageImg, setHomePageImg] = useState<{ img: string; preview: string } | null>(null);
+
   const { setAction } = useAnimationContext();
 
-  const { isDesktop, isTablet, isTableSmall, isMobile, isMobileSmall } = useMatchMedia({
-    sizeNames: ['isDesktop', 'isTablet', 'isTableSmall', 'isMobile', 'isMobileSmall'],
-    queries: [
-      '(min-width: 1025px)',
-      '(max-width: 1024px) and (min-width: 769px)',
-      '(max-width: 768px) and (min-width: 596px)',
-      '(max-width: 595px) and (min-width: 390px)',
-      '(max-width: 390px)',
-    ],
-  });
-
   useLayoutEffect(() => {
+    const loadHomePageImg = async () => {
+      const data = await getHomePageImage(() => console.error('Error: Empty home image!'));
+
+      setHomePageImg(data ?? null);
+    };
+
+    loadHomePageImg();
+
     setAction('app_load');
 
     const handlePopstate = () => {
@@ -58,28 +50,19 @@ export function App() {
           path: '/',
           element: (
             <>
-              <Img
-                src={
-                  isDesktop
-                    ? bgDesktop
-                    : isTablet
-                    ? bgTablet
-                    : isTableSmall
-                    ? bgTabletSmall
-                    : isMobile
-                    ? bgMobile
-                    : isMobileSmall
-                    ? bgMobileSmall
-                    : ''
-                }
-                srcPreview={bgPreview}
-                alt="Фон"
-                style={{
-                  position: 'fixed',
-                  top: '0px',
-                  left: '0px',
-                }}
-              />
+              {homePageImg ? (
+                <Img
+                  src={homePageImg.img}
+                  srcPreview={homePageImg.preview}
+                  externalUrl={import.meta.env.VITE_STRAPI_URL}
+                  alt="Фон"
+                  style={{
+                    position: 'fixed',
+                    top: '0px',
+                    left: '0px',
+                  }}
+                />
+              ) : null}
 
               <Layout key={'layout'} />
             </>
@@ -123,28 +106,20 @@ export function App() {
           path: '*',
           element: (
             <>
-              <Img
-                src={
-                  isDesktop
-                    ? bgDesktop
-                    : isTablet
-                    ? bgTablet
-                    : isTableSmall
-                    ? bgTabletSmall
-                    : isMobile
-                    ? bgMobile
-                    : isMobileSmall
-                    ? bgMobileSmall
-                    : ''
-                }
-                srcPreview={bgPreview}
-                alt="Фон"
-                style={{
-                  position: 'fixed',
-                  top: '0px',
-                  left: '0px',
-                }}
-              />
+              {homePageImg ? (
+                <Img
+                  src={homePageImg.img}
+                  srcPreview={homePageImg.preview}
+                  externalUrl={import.meta.env.VITE_STRAPI_URL}
+                  alt="Фон"
+                  style={{
+                    position: 'fixed',
+                    top: '0px',
+                    left: '0px',
+                  }}
+                />
+              ) : null}
+
               <PageError key={'page-error'} />
             </>
           ),

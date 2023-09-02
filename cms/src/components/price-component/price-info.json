@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_price_component_price_infos",
+  "info": {
+    "displayName": "Price info"
+  },
+  "options": {},
+  "attributes": {
+    "price": {
+      "type": "float",
+      "required": true
+    },
+    "name": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

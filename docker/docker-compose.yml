@@ -6,6 +6,12 @@ services:
     build:
       context: ../website
       dockerfile: ../docker/Dockerfile.website.${MODE:-dev}
+      args:
+        - VITE_STRAPI_URL=${VITE_STRAPI_URL}
+        - VITE_STRAPI_TOKEN=${VITE_STRAPI_TOKEN}
+    environment:
+          - VITE_STRAPI_URL=${VITE_STRAPI_URL}
+          - VITE_STRAPI_TOKEN=${VITE_STRAPI_TOKEN}
     ports:
       - 5173:5173
     volumes:
@@ -27,8 +33,7 @@ services:
       - ../cms/src:/app/src
       - ../cms/package.json:/app/package.json
       - ../cms/yarn.lock:/app/yarn.lock
-      - ../cms/public/uploads:/app/public/uploads
-    env_file: ./.env
+      - gymnastic_media:/app/public/uploads
     environment:
       - HOST=${HOST}
       - PORT=${PORT}
@@ -51,14 +56,15 @@ services:
   db:
     image: postgres:14-alpine
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE_NAME}"]
+      test:
+        ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE_NAME}"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 10s
     restart: unless-stopped
     volumes:
-      - db:/var/lib/postgresql/data
+      - gymnastic_db:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
       - POSTGRES_USER=${DATABASE_USERNAME}
@@ -67,7 +73,8 @@ services:
       - strapi
 
 volumes:
-  db:
+  gymnastic_db:
+  gymnastic_media:
 
 networks:
   strapi:

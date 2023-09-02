@@ -15,11 +15,11 @@
       "type": "string",
       "required": true
     },
-    "price_infos": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::price-info.price-info",
-      "mappedBy": "prices"
+    "info": {
+      "type": "component",
+      "repeatable": true,
+      "component": "price-component.price-info",
+      "required": true
     }
   }
 }

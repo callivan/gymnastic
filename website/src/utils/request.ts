@@ -1,13 +1,12 @@
 import ky from 'ky';
 import {
-  IAddressesResponseAttributes,
   ICoachesResponseAttributes,
+  IContactsResponseAttributes,
+  IHomePageImageAttributes,
   IMediaPhotosResponseAttributes,
   IMediaVideosResponseAttributes,
   IPriceInfoResponseAttributes,
-  ISocialResponseAttributes,
 } from '@types';
-import { IPhonsResponseAttributes } from 'src/types/IPhone';
 
 const headers = {
   Authorization: `Bearer ${import.meta.env.VITE_STRAPI_TOKEN}`,
@@ -24,10 +23,7 @@ export const getPrices = async (errorCallback: (message: string) => void) => {
     return data.map((d) => ({
       id: d.id,
       title: d.attributes.title,
-      price_infos: d.attributes.price_infos.data.map((d) => ({
-        ...d.attributes,
-        id: d.id,
-      })),
+      price_infos: d.attributes.info,
     }));
   } catch (err: any) {
     errorCallback(err.message);
@@ -48,9 +44,7 @@ export const getCoaches = async (errorCallback: (message: string) => void) => {
       id: d.id,
       imgUrl: d.attributes.img.data.attributes.formats.md.url,
       imgPreviewUrl: d.attributes.img.data.attributes.formats.preview.url,
-      coach_infos: d.attributes.coach_infos
-        ? d.attributes.coach_infos.data.map((d) => ({ id: d.id, ...d.attributes }))
-        : [],
+      coach_infos: d.attributes.info,
     }));
   } catch (err: any) {
     errorCallback(err.message);
@@ -97,47 +91,33 @@ export const getMedias = async (errorCallback: (message: string) => void) => {
   }
 };
 
-export const getAddresses = async (errorCallback: (message: string) => void) => {
+export const getContacts = async (errorCallback: (message: string) => void) => {
   try {
-    const { data }: IAddressesResponseAttributes = await ky
-      .get(`${import.meta.env.VITE_STRAPI_URL}/api/addresses?populate=*&pagination[limit]=-1`, {
+    const { data }: IContactsResponseAttributes = await ky
+      .get(`${import.meta.env.VITE_STRAPI_URL}/api/contact?populate=*&pagination[limit]=-1`, {
         headers,
       })
       .json();
 
-    return data.map((d) => ({ ...d.attributes, id: d.id }));
+    return data;
   } catch (err: any) {
     errorCallback(err.message);
-    return [];
   }
 };
 
-export const getPhons = async (errorCallback: (message: string) => void) => {
+export const getHomePageImage = async (errorCallback: (message: string) => void) => {
   try {
-    const { data }: IPhonsResponseAttributes = await ky
-      .get(`${import.meta.env.VITE_STRAPI_URL}/api/phones?populate=*&pagination[limit]=-1`, {
+    const { data }: IHomePageImageAttributes = await ky
+      .get(`${import.meta.env.VITE_STRAPI_URL}/api/home-image?populate=*`, {
         headers,
       })
       .json();
 
-    return data.map((d) => ({ ...d.attributes, id: d.id }));
+    return {
+      img: data.attributes.img.data.attributes.url,
+      preview: data.attributes.img.data.attributes.formats.preview.url,
+    };
   } catch (err: any) {
     errorCallback(err.message);
-    return [];
-  }
-};
-
-export const getSocial = async (errorCallback: (message: string) => void) => {
-  try {
-    const { data }: ISocialResponseAttributes = await ky
-      .get(`${import.meta.env.VITE_STRAPI_URL}/api/socials?populate=*&pagination[limit]=-1`, {
-        headers,
-      })
-      .json();
-
-    return data.map((d) => ({ ...d.attributes, id: d.id }));
-  } catch (err: any) {
-    errorCallback(err.message);
-    return [];
   }
 };

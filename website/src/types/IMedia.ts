@@ -23,6 +23,25 @@ interface IMediaPhotoAttributes {
   };
 }
 
+export interface IHomePageImageAttributes {
+  data: {
+    attributes: {
+      img: {
+        data: {
+          attributes: {
+            formats: {
+              preview: {
+                url: string;
+              };
+            };
+            url: string;
+          };
+        };
+      };
+    };
+  };
+}
+
 export interface IMediaPhotosResponseAttributes {
   data: IMediaPhotoAttributes[];
 }

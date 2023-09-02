@@ -4,8 +4,7 @@
   "info": {
     "singularName": "coach",
     "pluralName": "coaches",
-    "displayName": "Coach",
-    "description": ""
+    "displayName": "Coach"
   },
   "options": {
     "draftAndPublish": false
@@ -21,18 +20,18 @@
       "required": true
     },
     "img": {
-      "type": "media",
-      "multiple": false,
-      "required": true,
       "allowedTypes": [
         "images"
-      ]
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
     },
-    "coach_infos": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::coach-info.coach-info",
-      "mappedBy": "coaches"
+    "info": {
+      "type": "component",
+      "repeatable": true,
+      "component": "coach-component.coach-info",
+      "required": true
     }
   }
 }

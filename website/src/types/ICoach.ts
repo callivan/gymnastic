@@ -8,16 +8,14 @@ interface ICoachAttributes {
     };
     firstname: string;
     lastname: string;
-    coach_infos: { data: ICoachInfoAttributes[] };
+    info: ICoachInfoAttributes[];
   };
 }
 
 interface ICoachInfoAttributes {
   id: string;
-  attributes: {
-    title: string;
-    description: string;
-  };
+  title: string;
+  description: string;
 }
 
 export interface ICoachesResponseAttributes {

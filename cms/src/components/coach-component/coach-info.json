@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_coach_component_coach_infos",
+  "info": {
+    "displayName": "Coach info"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "text",
+      "required": true
+    },
+    "description": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}

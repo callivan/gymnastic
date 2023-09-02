@@ -20,6 +20,7 @@ export default function PagePrices() {
       const data = await getPrices((message) =>
         navigate('/error', { state: message, replace: true }),
       );
+
       setPrices(data ?? []);
 
       if (!data || !data.length) {
@@ -31,6 +32,7 @@ export default function PagePrices() {
 
     loadPrices();
   }, [action]);
+
   return (
     <>
       <Helmet>
@@ -46,6 +48,16 @@ export default function PagePrices() {
           property="og:description"
           content="Цены на различные услуги учебно-тренировочного центра 'Вверх'"
         />
+        <meta property="og:image" content="/logo-social.png" />
+        <meta property="og:image:width" content="400" />
+        <meta property="og:image:height" content="400" />
+
+        <meta name="twitter:title" content="Вверх | Цены" />
+        <meta
+          name="twitter:description"
+          content="Цены на различные услуги учебно-тренировочного центра 'Вверх'"
+        />
+        <meta name="twitter:image" content="/logo-social.png" />
       </Helmet>
       <Scroll>
         <Price prices={prices} />

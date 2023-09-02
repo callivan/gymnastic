@@ -52,6 +52,16 @@ export default function PageMedia() {
           property="og:description"
           content="Фото и видео материалы учебно-тренировочного центра 'Вверх'"
         />
+        <meta property="og:image" content="/logo-social.png" />
+        <meta property="og:image:width" content="400" />
+        <meta property="og:image:height" content="400" />
+
+        <meta name="twitter:title" content="Вверх | Медиа" />
+        <meta
+          name="twitter:description"
+          content="Фото и видео материалы учебно-тренировочного центра 'Вверх'"
+        />
+        <meta name="twitter:image" content="/logo-social.png" />
       </Helmet>
       <Scroll>
         <S.Wrapper>

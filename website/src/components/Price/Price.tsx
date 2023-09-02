@@ -1,6 +1,6 @@
 import { Fragment, useLayoutEffect, useRef } from 'react';
 import * as S from './Price.styles';
-import { IPriceProps } from './types/components';
+import { IPriceProps } from './types/component';
 import { useDividerAnimation, usePricesAnimation } from './animations';
 import { animated } from '@react-spring/web';
 import { useMatchMedia } from '@utils';
