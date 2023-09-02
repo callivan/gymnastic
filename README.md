@@ -1,4 +1,4 @@
-<img src="assets/logo.png" width="400" height="400" />
+<div style="display: flex; justify-content: center;"><img src="assets/logo.png" width="400" height="400" /></div>
 
 ## 🧰 `Технологии`
 
