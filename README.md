@@ -102,6 +102,6 @@ export default ({ env }) => ({
 });
 ```
 
-Для конввертирования изображений используется strapi-plugin-local-image-sharp.
+Для конвертирования изображений используется strapi-plugin-local-image-sharp.
 
 Если возникли проблемы с запуском приложения [telegram](https://t.me/maslinok)
