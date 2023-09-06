@@ -85,6 +85,23 @@ export default ({ env }) => ({
     populateRelations: env.bool("WEBHOOKS_POPULATE_RELATIONS", false),
   },
 });
+
+// ./config/plugins.ts
+
+export default ({ env }) => ({
+  upload: {
+    config: {
+      provider: "local",
+      breakpoints: {
+        preview: 50,
+        s: 250,
+        md: 960,
+      },
+    },
+  },
+});
 ```
+
+Для конввертирования изображений используется strapi-plugin-local-image-sharp.
 
 Если возникли проблемы с запуском приложения [telegram](https://t.me/maslinok)
