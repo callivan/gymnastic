@@ -3,13 +3,12 @@ import * as S from './Media.styles';
 import { Scroll } from '@ui';
 import { useLayoutEffect, useState } from 'react';
 import { getMedias } from '@utils';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useAnimationContext } from '@contexts';
 
 export default function PageMedia() {
   const navigate = useNavigate();
-  const pathname = useLocation();
 
   const { action } = useAnimationContext();
 

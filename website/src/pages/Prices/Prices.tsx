@@ -4,11 +4,10 @@ import { Scroll } from '@ui';
 import { getPrices } from '@utils';
 import { useLayoutEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function PagePrices() {
   const navigate = useNavigate();
-  const pathname = useLocation();
 
   const { action } = useAnimationContext();
   const [isEmpty, setEmpty] = useState<boolean>(false);

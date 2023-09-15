@@ -6,14 +6,13 @@ import { useLayoutEffect, useState } from 'react';
 import { animated } from '@react-spring/web';
 import { IconMarker, IconPhone, Loader, Scroll } from '@ui';
 import { getContacts, GET_SOCIAL_ICON } from '@utils';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Empty } from '@components';
 import { Helmet } from 'react-helmet-async';
 import { IAddressAttributes, IPhoneAttributes, ISocialAttributes } from '@types';
 
 export default function PageContacts() {
   const navigate = useNavigate();
-  const pathname = useLocation();
 
   const [isEmpty, setEmpty] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(true);

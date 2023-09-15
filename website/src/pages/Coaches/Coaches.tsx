@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import { Card, Empty, TCardProps } from '@components';
 import * as S from './Coaches.styles';
 import { Scroll } from '@ui';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAnimationContext } from '@contexts';
 import { useCardAnimation } from './animations';
 import { getCoaches } from '@utils';
@@ -11,7 +11,6 @@ import { Helmet } from 'react-helmet-async';
 
 export default function PageCoaches() {
   const navigate = useNavigate();
-  const pathname = useLocation();
 
   const [isEmpty, setEmpty] = useState<boolean>(false);
   const [coaches, setCoaches] = useState<TCardProps[]>([]);
