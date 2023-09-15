@@ -1,8 +1,5 @@
 FROM node:18-alpine as build
 
-ARG VITE_STRAPI_URL
-ARG VITE_STRAPI_TOKEN
-
 WORKDIR /app
 
 COPY package.json package-lock.json /app/
@@ -11,14 +8,8 @@ RUN npm ci
 
 COPY . /app
 
-RUN npm run build
+EXPOSE 4173
 
-EXPOSE 5173
+RUN chmod +x entrypoint.sh
 
-FROM nginx:1.21.0-alpine
-
-COPY --from=build /app/dist /usr/share/nginx/html
-
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/bin/sh", "entrypoint.sh"]
