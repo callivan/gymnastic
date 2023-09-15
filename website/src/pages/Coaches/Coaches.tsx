@@ -78,37 +78,12 @@ export default function PageCoaches() {
     loadCoaches();
   }, []);
 
-  const siteName =
-    import.meta.env.VITE_STRAPI_URL && typeof import.meta.env.VITE_STRAPI_URL === 'string'
-      ? import.meta.env.VITE_STRAPI_URL.replace(/http(s)?:\/\//gi, '')
-      : '';
-
   return (
     <>
       <Helmet>
         <title>Вверх | Тренеры</title>
-        <meta name="description" content="Тренерский состав учебно-тренировочного центра 'Вверх'" />
-        <meta name="keywords" content="Гимнастика, Акробатика, Спорт, Дети, Вверх, Тренеры" />
-
         <meta property="og:title" content="Вверх | Тренеры" />
-        <meta
-          property="og:description"
-          content="Тренерский состав учебно-тренировочного центра 'Вверх'"
-        />
-        <meta property="og:url" content={import.meta.env.VITE_STRAPI_URL + pathname} />
-        <meta property="og:site_name" content={siteName} />
-        <meta property="og:image" content="/logo-social.png" />
-        <meta property="og:image:width" content="400" />
-        <meta property="og:image:height" content="400" />
-
         <meta name="twitter:title" content="Вверх | Тренеры" />
-        <meta
-          name="twitter:description"
-          content="Тренерский состав учебно-тренировочного центра 'Вверх'"
-        />
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={import.meta.env.VITE_STRAPI_URL + pathname} />
-        <meta name="twitter:image" content="/logo-social.png" />
       </Helmet>
 
       <Scroll>
