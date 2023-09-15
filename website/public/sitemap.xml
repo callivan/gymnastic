@@ -1,29 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-		<!--	created with www.mysitemapgenerator.com	-->
-		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url>
-	<loc>https://vverx-rf.ru/</loc>
-	<lastmod>2023-08-06T19:58:30+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://vverx-rf.ru/prices</loc>
-	<lastmod>2023-08-06T19:58:30+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://vverx-rf.ru/coaches</loc>
-	<lastmod>2023-08-06T19:58:30+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://vverx-rf.ru/media</loc>
-	<lastmod>2023-08-06T19:58:30+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://vverx-rf.ru/contacts</loc>
-	<lastmod>2023-08-06T19:58:30+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
+<!--	created with www.mysitemapgenerator.com	-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<url>
+		<loc>https://vverx-rf.ru/</loc>
+		<lastmod>2023-08-06T19:58:30+01:00</lastmod>
+		<priority>1.0</priority>
+	</url>
 </urlset>
